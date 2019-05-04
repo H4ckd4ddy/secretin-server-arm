@@ -1,8 +1,9 @@
-FROM node:8.6.0
+FROM hypriot/rpi-node
 
-# PID 1 needs to handle process reaping and signals
-# https://engineeringblog.yelp.com/2016/01/dumb-init-an-init-for-docker.html
-RUN curl -L https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 > /usr/local/bin/dumb-init && chmod +x /usr/local/bin/dumb-init
+ENV BEHIND_REVERSE_PROXY=0
+ENV REDIS_URL="redis://anonymous@redis:6379"
+ENV COUCHDB_URL="http://admin:password@couchdb:5984/secretin"
+ENV PORT=3000
 
 RUN mkdir -p /secretin-server
 WORKDIR /secretin-server
@@ -11,12 +12,11 @@ COPY package.json /secretin-server
 RUN yarn install
 
 COPY . /secretin-server
+COPY .es* /secretin-server/
 
-EXPOSE 80
+EXPOSE 3000
 
-ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
-
-COPY ./setup-system-tables-and-start.sh /
+COPY setup-system-tables-and-start.sh /
 
 RUN chmod 755 /setup-system-tables-and-start.sh
 
