@@ -15,11 +15,13 @@ do
   sleep 1
 done
 
-curl -X PUT $COUCHDB_HOST/_config/admins/$COUCHDB_ADMIN_USERNAME -d \"$COUCHDB_ADMIN_PASSWORD\"
+sleep 10
 
 curl -X PUT $COUCHDB_HOST/_global_changes
 curl -X PUT $COUCHDB_HOST/_metadata
 curl -X PUT $COUCHDB_HOST/_replicator
 curl -X PUT $COUCHDB_HOST/_users
+
+curl -X PUT $COUCHDB_HOST/_config/admins/$COUCHDB_ADMIN_USERNAME -d \"$COUCHDB_ADMIN_PASSWORD\"
 
 yarn start
