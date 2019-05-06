@@ -5,4 +5,4 @@
 Secretin-server image for ARM arch like raspberry
 
 Added features :
-* deactivation of registrations
+* deactivation of registrations by an environment variable : ```DISABLE_REGISTRATION=1```
