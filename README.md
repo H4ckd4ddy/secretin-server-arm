@@ -3,3 +3,6 @@
 
 
 Secretin-server image for ARM arch like raspberry
+
+Added features :
+* deactivation of registrations
